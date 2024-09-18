@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:lts
+    container_name: insert_mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: local_database
+    ports:
+      - "3306:3306"
