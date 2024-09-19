@@ -46,4 +46,12 @@ public class PostJdbcDao {
             }
         });
     }
+
+    public long count() {
+        String sql = "SELECT COUNT(*) FROM post";
+
+        Long count = jdbcTemplate.queryForObject(sql, Long.class);
+
+        return count == null ? 0 : count;
+    }
 }
