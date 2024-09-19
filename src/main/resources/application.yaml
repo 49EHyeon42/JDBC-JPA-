@@ -1,6 +1,6 @@
 spring:
   application:
-    name: infinite_scroll
+    name: insert
   datasource:
     url: jdbc:mariadb://localhost:3306/local_database
     username: root
