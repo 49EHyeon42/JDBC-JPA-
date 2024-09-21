@@ -78,4 +78,61 @@ public class PostJdbcDaoBatchInsertTest {
 
         Assertions.assertEquals(size, count);
     }
+
+    @Test
+    @Transactional
+    public void batchInsertTestWith1MRecordsAnd10BatchSize() {
+        batchInsertTestWithSizeRecordsAndBatchSize(1_000_000, 10);
+    }
+
+    @Test
+    @Transactional
+    public void batchInsertTestWith1MRecordsAnd100BatchSize() {
+        batchInsertTestWithSizeRecordsAndBatchSize(1_000_000, 100);
+    }
+
+    @Test
+    @Transactional
+    public void batchInsertTestWith1MRecordsAnd1KBatchSize() {
+        batchInsertTestWithSizeRecordsAndBatchSize(1_000_000, 1_000);
+    }
+
+    @Test
+    @Transactional
+    public void batchInsertTestWith1MRecordsAnd10KBatchSize() {
+        batchInsertTestWithSizeRecordsAndBatchSize(1_000_000, 10_000);
+    }
+
+    @Test
+    @Transactional
+    public void batchInsertTestWith1MRecordsAnd100KBatchSize() {
+        batchInsertTestWithSizeRecordsAndBatchSize(1_000_000, 100_000);
+    }
+
+    private void batchInsertTestWithSizeRecordsAndBatchSize(int size, int batchSize) {
+        Instant startTime = Instant.now();
+
+        List<InsertPostDto> insertPostDtos = new ArrayList<>(batchSize);
+
+        for (int i = 0; i < size; i++) {
+            insertPostDtos.add(new InsertPostDto("title", "content"));
+
+            if (insertPostDtos.size() == batchSize) {
+                postJdbcDao.batchInsert(insertPostDtos);
+                insertPostDtos.clear();
+            }
+        }
+
+        if (!insertPostDtos.isEmpty()) {
+            postJdbcDao.batchInsert(insertPostDtos);
+        }
+
+        Instant endTime = Instant.now();
+
+        System.out.println("JDBC batch insert of " + numberformat.format(size) + " records took: " + Duration.between(startTime, endTime).toMillis() + "ms");
+
+        long count = postJdbcDao.count();
+
+        Assertions.assertEquals(size, count);
+    }
 }
