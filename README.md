@@ -47,4 +47,14 @@
 
 ![average_comparison](./images/average_comparison.png)
 
-### JDBC batchInsert, batch size에 따른 처리 속도 비교
+### JDBC batchInsert, batch size에 따른 평균 (3회) 처리 속도 비교
+
+| **batch size** | **1M (ms)** |
+|:--------------:|:-----------:|
+|     **10**     |    11607    |
+|     **100**    |     3543    |
+|     **1K**     |     2135    |
+|     **10K**    |     1762    |
+|    **100K**    |     1607    |
+
+![batch_size_comparison](./images/batch_size_comparison.png)
